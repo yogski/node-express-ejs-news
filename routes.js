@@ -1,7 +1,7 @@
 const express = require('express');
 const newsApi = require('newsapi');
 
-const news = new newsApi('662686f399bd415aa024deea2dff86a4');
+const news = new newsApi('YOUR_API_KEY');
 const router = express.Router();
 // basic routing
 router.get('/news', (req, res) => {
