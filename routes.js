@@ -1,10 +1,13 @@
 const express = require('express');
 const newsApi = require('newsapi');
-
-const news = new newsApi('YOUR_API_HERE');
+const check = require('./middlewares.js')
+const app = express()
+const news = new newsApi('04d34934928e42f8beff8e186d048899');
 const router = express.Router();
+app.use(check.logger)
+
 // basic routing
-router.get('/news', (req, res) => {
+router.get('/news',check.logger, (req, res) => {
     news.v2.topHeadlines({
         q: req.query.q,
         country: 'id'
@@ -15,9 +18,24 @@ router.get('/news', (req, res) => {
                 articles
             })
         } else {
-            res.send('Cannot fetch news.')
+            res.send("error")
         }
     });
+})
+router.get('/covid',check.logger, (req, res) => {
+    news.v2.everything({
+        q: 'covid',
+        language: 'id',
+      }).then(response => {
+          let articles = response.articles;
+        res.render('news', {
+            articles
+        })
+      });
+})
+
+router.get('/error',(req,res)=>{
+    iniError
 })
 
 module.exports = router;
