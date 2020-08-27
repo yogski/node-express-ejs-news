@@ -11,6 +11,6 @@ const notFoundHandler = (req, res, next) => {
 }
 
 const notFoundHandler505 = (err, req, res, next) => {
-    res.status(505).send("URL not found 505");
+    res.status(505).send("Server Down Error 505");
 }
 module.exports = {logger, notFoundHandler,notFoundHandler505};
