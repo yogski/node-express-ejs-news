@@ -1,8 +1,10 @@
 <html>
+
 <head>
     <title>News</title>
     <link rel="stylesheet" href="public/css/style.css">
 </head>
+
 <body>
     <div class="row">
         <h2 style="align-items: center;">NEWS TODAY</h2>
@@ -10,17 +12,19 @@
     </div>
     <div class="row">
         <% for(var i=0; i < articles.length; i++) { %>
-            <div class="column" style="display: flex;justify-content: center;align-items: center;">
-                <div class="content" style="width:30%; height: auto; align-items: center;">
+        <div class="column" style="display: flex;justify-content: center;align-items: center;">
+            <div class="content" style="width:30%; height: auto; align-items: center;">
                 <a href="<%= articles[i].url %>">
-                    <img src="<%= articles[i].urlToImage %>" alt="<%= articles[i].source.name %>" style="width:100%; height: auto;">
+                    <img src="<%= articles[i].urlToImage %>" alt="<%= articles[i].source.name %>"
+                        style="width:100%; height: auto;">
                 </a>
                 <h6><%= articles[i].title %></h6>
                 <p><%= articles[i].description %></p>
                 <hr>
             </div>
-            </div>
+        </div>
         <% } %>
     </div>
 </body>
+
 </html>
