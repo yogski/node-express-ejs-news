@@ -9,4 +9,12 @@ const notFoundHandler = (req, res, next) => {
     res.status(404).send("URL not found");
 }
 
-module.exports = {logger, notFoundHandler};
+const internalServerError = (err, req, res, next) => {
+    console.error(err)
+    res.status(500).json({
+        status:'fail',
+        errors:err.message
+    })
+}
+
+module.exports = {logger, notFoundHandler, internalServerError};
