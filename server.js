@@ -1,15 +1,42 @@
-const express = require('express');
-const router = require('./routes');
+const express = require('express')
+const newsapi = require('newsapi')
+const app = express()
+const PORT = 8080
+require('dotenv').config()
+const API_KEY = process.env.API_KEY
 
-// inisialisasi app
-const app = express();
-const port = process.env.PORT || 5000;
-app.set('view engine', 'ejs');
-app.use(router);
+app.use(express.static(__dirname + '/public'))
+app.set('view engine', 'ejs')
 
-// Body parser, reading data from body into req.body
-app.use(express.json());
+const news = new newsapi(API_KEY)
 
-app.listen(port, () => {
-    console.log(`Application is running on port ${port}`);
-});
+app.get('/today', (req, res) => {
+  news.v2
+    .topHeadlines({
+      q: req.query.q,
+      country: 'us',
+    })
+    .then((result) => {
+      if (result.status === 'ok') {
+        let articles = result.articles
+        res.render('news', { articles })
+      } else {
+        res.send('No news found.')
+      }
+    })
+})
+
+app.get('/javascript', (req, res) => {
+  news.v2.everything({ q: 'javascript' }).then((result) => {
+    if (result.status === 'ok') {
+      let articles = result.articles
+      res.render('news', { articles })
+    } else {
+      res.send('No news found.')
+    }
+  })
+})
+
+app.listen(PORT, () => {
+  console.log(`App listen on ${PORT}`)
+})
